@@ -6,6 +6,22 @@
 #include <ctype.h>
 #include <time.h>
 
+short int choice;
+
+/**
+  *@brief  : Function to make user choice playing mode
+  *@param  : void
+  *@return : user choice
+  */
+void GameMode(void);
+
+/**
+  *@brief  : Function to reset board
+  *@param  : void
+  *@return : void
+  */
+void GetPlayersNames();
+
 /**
   *@brief  : Function to reset board
   *@param  : void
@@ -40,6 +56,13 @@ void playerOneMove();
   *@return : void
   */
 void playerTwoMove();
+
+/**
+  *@brief  : Function to get Computer moving
+  *@param  : void
+  *@return : void
+  */
+void computerMove();
 
 /**
   *@brief  : Function to check if there is a winner

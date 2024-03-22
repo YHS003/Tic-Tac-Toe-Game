@@ -3,6 +3,60 @@
 static char board[10] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '\0'};
 static const char PLAYER_ONE = 'X';
 static const char PLAYER_TWO = 'O';
+static const char Computer = 'O';
+static char PlayerOneName[15];
+static char PlayerTwoName[15];
+
+/**
+  *@brief  : Function to make user choice playing mode
+  *@param  : void
+  *@return : void
+  */
+void GameMode(void)
+{
+    do
+    {
+        system("cls");
+
+        printf("1- Play with Friend\n");
+        printf("2- Play with Computer\n\n");
+
+        printf("Choose Game Mode: ");
+        scanf("%i", &choice);
+
+        system("cls");
+
+    }
+    while((1 > choice) || (2 < choice));
+
+}
+
+/**
+  *@brief  : Function to reset board
+  *@param  : void
+  *@return : void
+  */
+void GetPlayersNames()
+{
+    if(2 == choice)
+    {
+        printf("Please enter Player Name: ");
+        scanf("%s", PlayerOneName);
+
+        system("cls");
+    }
+    else
+    {
+        printf("Please enter Player 1 Name: ");
+        scanf("%s", PlayerOneName);
+
+        printf("Please enter Player 2 Name: ");
+        scanf("%s", PlayerTwoName);
+
+        system("cls");
+    }
+
+}
 
 /**
   *@brief  : Function to reset board
@@ -42,14 +96,14 @@ char checkFreeSpaces()
 
     for(char reset = 0; reset < 9; reset++)
     {
-            if(board[reset] != ' ')
-            {
-                freeSpaces--;
-            }
-            else
-            {
-                /*Nothing*/
-            }
+        if(board[reset] != ' ')
+        {
+            freeSpaces--;
+        }
+        else
+        {
+            /*Nothing*/
+        }
     }
 
     return freeSpaces;
@@ -66,7 +120,7 @@ void playerOneMove()
 
     do
     {
-        printf("Player 1 turn: ");
+        printf("%s turn: ", PlayerOneName);
         fflush(stdin);
         scanf("%i", &place);
     }
@@ -115,7 +169,7 @@ void playerTwoMove()
 
     do
     {
-        printf("Player 2 turn: ");
+        printf("%s turn: ", PlayerTwoName);
         fflush(stdin);
         scanf("%i", &place);
     }
@@ -150,6 +204,34 @@ void playerTwoMove()
     case 9:
         board[8] = PLAYER_TWO;
         break;
+    }
+}
+
+/**
+  *@brief  : Function to get Computer moving
+  *@param  : void
+  *@return : void
+  */
+void computerMove()
+{
+    //creates a seed based on current time
+    srand(time(0));
+
+    int computerMove;
+
+    if(checkFreeSpaces() > 0)
+    {
+        do
+        {
+            computerMove = rand() % 10;
+        }
+        while((' ' != board[computerMove]) || (1 > computerMove) || (9 < computerMove));
+
+        board[computerMove] = Computer;
+    }
+    else
+    {
+        printWinner(' ');
     }
 }
 
@@ -204,16 +286,34 @@ char checkWinner()
   */
 void printWinner(char winner)
 {
-    if(PLAYER_ONE == winner)
+    if(1 == choice)
     {
-        printf("Player 1 win\n");
-    }
-    else if(PLAYER_TWO == winner)
-    {
-        printf("Player 2 win\n");
+        if(PLAYER_ONE == winner)
+        {
+            printf("%s win\n", PlayerOneName);
+        }
+        else if(PLAYER_TWO == winner)
+        {
+            printf("%s win\n", PlayerTwoName);
+        }
+        else
+        {
+            printf("It's TIE!!!\n");
+        }
     }
     else
     {
-        printf("It's TIE!!!\n");
+        if(PLAYER_ONE == winner)
+        {
+            printf("%s win\n", PlayerOneName);
+        }
+        else if(Computer == winner)
+        {
+            printf("You Lose\n");
+        }
+        else
+        {
+            printf("It's TIE!!!\n");
+        }
     }
 }
